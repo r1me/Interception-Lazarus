@@ -12,8 +12,6 @@ var
   keystroke: PInterceptionKeyStroke;
   hardware_id: array[1..500] of WideChar;
   len: Integer;
-
-  shardware_id: String;
 begin
   raise_process_priority;
 
@@ -33,10 +31,7 @@ begin
 
     len := interception_get_hardware_id(context, device, @hardware_id[1], Length(hardware_id));
     if (len > 0) and (len < Length(hardware_id)) then
-    begin
-      SetString(shardware_id, PWideChar(@hardware_id[1]), len div SizeOf(WideChar));
-      WriteLn(shardware_id);
-    end;
+      WriteLn(String(PWideChar(@hardware_id[1])));
 
     interception_send(context, device, @stroke, 1);
   end;
