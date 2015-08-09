@@ -17,7 +17,7 @@ type
   InterceptionFilter = Word;
 
 type
-  InterceptionPredicate = function(device: InterceptionDevice): LongBool; stdcall;
+  InterceptionPredicate = function(device: InterceptionDevice): LongBool; cdecl;
 
 const
   { InterceptionKeyState }
@@ -127,20 +127,20 @@ type
   InterceptionStroke = InterceptionMouseStroke;
   PInterceptionStroke = ^InterceptionStroke;
 
-function interception_create_context: InterceptionContext; stdcall; external 'interception.dll';
-procedure interception_destroy_context(context: InterceptionContext); stdcall; external 'interception.dll';
-function interception_get_precedence(context: InterceptionContext; device: InterceptionDevice): InterceptionPrecedence; stdcall; external 'interception.dll';
-procedure interception_set_precedence(context: InterceptionContext; device: InterceptionDevice; precedence: InterceptionPrecedence); stdcall; external 'interception.dll';
-function interception_get_filter(context: InterceptionContext; device: InterceptionDevice): InterceptionFilter; stdcall; external 'interception.dll';
-procedure interception_set_filter(context: InterceptionContext; predicate: InterceptionPredicate; filter: InterceptionFilter); stdcall; external 'interception.dll';
-function interception_wait(context: InterceptionContext): InterceptionDevice; stdcall; external 'interception.dll';
-function interception_wait_with_timeout(context: InterceptionContext; milliseconds: NativeUInt): InterceptionDevice; stdcall; external 'interception.dll';
-function interception_send(context: InterceptionContext; device: InterceptionDevice; const stroke: PInterceptionStroke; nstroke: Cardinal): Integer; stdcall; external 'interception.dll';
-function interception_receive(context: InterceptionContext; device: InterceptionDevice; stroke: PInterceptionStroke; nstroke: Cardinal): Integer; stdcall; external 'interception.dll';
-function interception_get_hardware_id(context: InterceptionContext; device: InterceptionDevice; hardware_id_buffer: Pointer; buffer_size: SizeInt): Cardinal; stdcall; external 'interception.dll';
-function interception_is_invalid(device: InterceptionDevice): LongBool; stdcall; external 'interception.dll';
-function interception_is_keyboard(device: InterceptionDevice): LongBool; stdcall; external 'interception.dll';
-function interception_is_mouse(device: InterceptionDevice): LongBool; stdcall; external 'interception.dll';
+function interception_create_context: InterceptionContext; cdecl; external 'interception.dll';
+procedure interception_destroy_context(context: InterceptionContext); cdecl; external 'interception.dll';
+function interception_get_precedence(context: InterceptionContext; device: InterceptionDevice): InterceptionPrecedence; cdecl; external 'interception.dll';
+procedure interception_set_precedence(context: InterceptionContext; device: InterceptionDevice; precedence: InterceptionPrecedence); cdecl; external 'interception.dll';
+function interception_get_filter(context: InterceptionContext; device: InterceptionDevice): InterceptionFilter; cdecl; external 'interception.dll';
+procedure interception_set_filter(context: InterceptionContext; predicate: InterceptionPredicate; filter: InterceptionFilter); cdecl; external 'interception.dll';
+function interception_wait(context: InterceptionContext): InterceptionDevice; cdecl; external 'interception.dll';
+function interception_wait_with_timeout(context: InterceptionContext; milliseconds: NativeUInt): InterceptionDevice; cdecl; external 'interception.dll';
+function interception_send(context: InterceptionContext; device: InterceptionDevice; const stroke: PInterceptionStroke; nstroke: Cardinal): Integer; cdecl; external 'interception.dll';
+function interception_receive(context: InterceptionContext; device: InterceptionDevice; stroke: PInterceptionStroke; nstroke: Cardinal): Integer; cdecl; external 'interception.dll';
+function interception_get_hardware_id(context: InterceptionContext; device: InterceptionDevice; hardware_id_buffer: Pointer; buffer_size: SizeInt): Cardinal; cdecl; external 'interception.dll';
+function interception_is_invalid(device: InterceptionDevice): LongBool; cdecl; external 'interception.dll';
+function interception_is_keyboard(device: InterceptionDevice): LongBool; cdecl; external 'interception.dll';
+function interception_is_mouse(device: InterceptionDevice): LongBool; cdecl; external 'interception.dll';
 
 implementation
 
