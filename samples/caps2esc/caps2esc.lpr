@@ -10,7 +10,7 @@ program caps2esc;
  */}
 
 uses
-  Classes, SysUtils, uInterception, uInterceptionUtils;
+  Windows, Classes, SysUtils, uInterception, uInterceptionUtils;
 
 type
   TInterceptionKeyStrokes = class
@@ -122,7 +122,12 @@ var
   device: InterceptionDevice;
   kstroke: InterceptionKeyStroke;
   kstrokes: TInterceptionKeyStrokes;
+  program_instance: PHandle;
 begin
+  program_instance := try_open_single_program('407631B6-78D3-4EFC-A868-40BBB7204CF1');
+  if (program_instance = nil) then
+    Halt(0);
+
   raise_process_priority;
 
   context := interception_create_context;
@@ -149,5 +154,7 @@ begin
   end;
 
   interception_destroy_context(context);
+
+  close_single_program(program_instance);
 end.
 

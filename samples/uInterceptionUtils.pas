@@ -11,6 +11,8 @@ function get_screen_width: Integer;
 function get_screen_height: Integer;
 procedure busy_wait(count: Cardinal);
 function calculate_busy_wait_millisecond: Cardinal;
+function try_open_single_program(const name: AnsiString): PHandle;
+procedure close_single_program(program_instance: PHandle);
 
 implementation
 
@@ -34,6 +36,8 @@ begin
   Result := GetSystemMetrics(SM_CYSCREEN);
 end;
 
+{$OPTIMIZATION OFF}
+
 procedure busy_wait(count: Cardinal);
 begin
   repeat
@@ -53,6 +57,26 @@ begin
   until count = 0;
   endtime := Now;
   Result := Cardinal(Round(2000000 / (MilliSecondsBetween(start, endtime) / 1000)));
+end;
+
+{$OPTIMIZATION ON}
+
+function try_open_single_program(const name: AnsiString): PHandle;
+var
+  full_name: AnsiString;
+  program_instance: THandle;
+begin
+  full_name := 'Global\{' + name + '}';
+  program_instance := CreateMutexA(nil, False, PAnsiChar(full_name));
+  if (GetLastError = ERROR_ALREADY_EXISTS) or (program_instance = 0) then
+    Result := nil
+  else
+    Result := PHandle(program_instance);
+end;
+
+procedure close_single_program(program_instance: PHandle);
+begin
+  CloseHandle(THandle(program_instance));
 end;
 
 end.
