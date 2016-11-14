@@ -85,7 +85,7 @@ begin
       capslock_is_down := False;
       Exit;
     end;
-    if (not esc_give_up) then
+    if (not esc_give_up) and not ((kstroke.state and INTERCEPTION_KEY_UP) = INTERCEPTION_KEY_UP) then
     begin
       esc_give_up := True;
       Result.push_back(ctrl_down);
