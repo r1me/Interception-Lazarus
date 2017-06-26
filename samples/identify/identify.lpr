@@ -28,10 +28,13 @@ begin
       WriteLn('INTERCEPTION_KEYBOARD(', device - INTERCEPTION_KEYBOARD(0), ')');
       if (keystroke^.code = SCANCODE_ESC) then
         Break;
-    end;
-
-    if interception_is_mouse(device) then
-      WriteLn('INTERCEPTION_MOUSE(', device - INTERCEPTION_MOUSE(0), ')');
+    end else
+	begin
+      if interception_is_mouse(device) then
+        WriteLn('INTERCEPTION_MOUSE(', device - INTERCEPTION_MOUSE(0), ')')
+	  else
+	    WriteLn('UNRECOGNIZED(', device, ')');
+	end;
 
     interception_send(context, device, @stroke, 1);
   end;
